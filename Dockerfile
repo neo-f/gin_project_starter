@@ -1,5 +1,8 @@
 FROM golang:alpine AS build-stage
 WORKDIR /go/src/gin_project_starter
+ENV GOPROXY=https://goproxy.cn
+COPY ["go.mod", "go.sum", "./"]
+RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -tags=jsoniter -o server ./src
 
