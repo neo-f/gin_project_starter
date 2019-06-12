@@ -11,5 +11,5 @@ require (
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/rs/zerolog v1.14.3
-	github.com/spf13/viper v1.3.2
+	github.com/spf13/viper v1.4.0
 )
