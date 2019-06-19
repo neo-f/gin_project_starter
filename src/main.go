@@ -3,13 +3,14 @@ package main
 import (
 	"gin_project_starter/src/controllers"
 	"gin_project_starter/src/services"
+	"os"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"os"
 )
 
 func main() {
@@ -48,6 +49,7 @@ func settingViper() {
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		log.Info().Msg("Config file changed:" + e.Name)
 	})
+	log.Info().Strs("configs", viper.AllKeys()).Msg("viper")
 	viper.WatchConfig()
 }
 

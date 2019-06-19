@@ -1,14 +1,26 @@
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+github.com/dgrijalva/jwt-go
 # github.com/fsnotify/fsnotify v1.4.7
 github.com/fsnotify/fsnotify
 # github.com/gin-contrib/pprof v1.2.0
 github.com/gin-contrib/pprof
-# github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3
+# github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
-# github.com/gin-gonic/gin v1.3.0
+# github.com/gin-gonic/gin v1.4.0
 github.com/gin-gonic/gin
 github.com/gin-gonic/gin/binding
-github.com/gin-gonic/gin/json
+github.com/gin-gonic/gin/internal/json
 github.com/gin-gonic/gin/render
+# github.com/go-pg/pg v8.0.4+incompatible
+github.com/go-pg/pg
+github.com/go-pg/pg/internal
+github.com/go-pg/pg/internal/pool
+github.com/go-pg/pg/orm
+github.com/go-pg/pg/types
+github.com/go-pg/pg/internal/iszero
+github.com/go-pg/pg/internal/parser
+github.com/go-pg/pg/internal/struct_filter
+github.com/go-pg/pg/internal/tag
 # github.com/golang/protobuf v1.3.1
 github.com/golang/protobuf/proto
 # github.com/hashicorp/hcl v1.0.0
@@ -22,11 +34,13 @@ github.com/hashicorp/hcl/hcl/scanner
 github.com/hashicorp/hcl/hcl/strconv
 github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
-# github.com/json-iterator/go v1.1.5
+# github.com/jinzhu/inflection v1.0.0
+github.com/jinzhu/inflection
+# github.com/json-iterator/go v1.1.6
 github.com/json-iterator/go
-# github.com/magiconair/properties v1.8.0
+# github.com/magiconair/properties v1.8.1
 github.com/magiconair/properties
-# github.com/mattn/go-isatty v0.0.7
+# github.com/mattn/go-isatty v0.0.8
 github.com/mattn/go-isatty
 # github.com/mitchellh/mapstructure v1.1.2
 github.com/mitchellh/mapstructure
@@ -34,32 +48,42 @@ github.com/mitchellh/mapstructure
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
-# github.com/pelletier/go-toml v1.2.0
+# github.com/pelletier/go-toml v1.4.0
 github.com/pelletier/go-toml
+# github.com/pkg/errors v0.8.1
+github.com/pkg/errors
 # github.com/rs/zerolog v1.14.3
 github.com/rs/zerolog
 github.com/rs/zerolog/log
 github.com/rs/zerolog/internal/cbor
 github.com/rs/zerolog/internal/json
-# github.com/spf13/afero v1.1.2
+# github.com/spf13/afero v1.2.2
 github.com/spf13/afero
 github.com/spf13/afero/mem
 # github.com/spf13/cast v1.3.0
 github.com/spf13/cast
-# github.com/spf13/jwalterweatherman v1.0.0
+# github.com/spf13/jwalterweatherman v1.1.0
 github.com/spf13/jwalterweatherman
 # github.com/spf13/pflag v1.0.3
 github.com/spf13/pflag
-# github.com/spf13/viper v1.3.2
+# github.com/spf13/viper v1.4.0
 github.com/spf13/viper
-# github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2
+# github.com/ugorji/go/codec v1.1.5-pre
 github.com/ugorji/go/codec
-# golang.org/x/sys v0.0.0-20190222072716-a9d3bda3a223
+# golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
+golang.org/x/crypto/pbkdf2
+# golang.org/x/sys v0.0.0-20190618155005-516e3c20635f
 golang.org/x/sys/unix
-# golang.org/x/text v0.3.0
+# golang.org/x/text v0.3.2
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
+# golang.org/x/tools v0.0.0-20190618233249-04b924abaa25
+golang.org/x/tools/cover
 # gopkg.in/go-playground/validator.v8 v8.18.2
 gopkg.in/go-playground/validator.v8
 # gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
+# mellium.im/sasl v0.2.1
+mellium.im/sasl
