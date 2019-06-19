@@ -10,6 +10,7 @@ require (
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-pg/pg v8.0.4+incompatible
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/json-iterator/go v1.1.6
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/onsi/ginkgo v1.8.0
@@ -25,6 +26,5 @@ require (
 	golang.org/x/net v0.0.0-20190619014844-b5b0513f8c1b // indirect
 	golang.org/x/sys v0.0.0-20190618155005-516e3c20635f // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20190618233249-04b924abaa25
 	mellium.im/sasl v0.2.1 // indirect
 )

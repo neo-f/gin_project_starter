@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
-	settingViper()
 	settingLogger()
+	settingViper()
 
 	engine := gin.New()
 	engine.Use(gin.ErrorLogger())
@@ -49,7 +49,6 @@ func settingViper() {
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		log.Info().Msg("Config file changed:" + e.Name)
 	})
-	log.Info().Strs("configs", viper.AllKeys()).Msg("viper")
 	viper.WatchConfig()
 }
 
