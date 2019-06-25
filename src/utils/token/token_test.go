@@ -16,7 +16,7 @@ var _ = Describe("Token", func() {
 			token, err := Create("itsneo1990@gmail.com")
 			Expect(err).To(BeNil())
 			Expect(Verify(token)).To(BeTrue())
-			Expect(GetUserEmail(token)).To(Equal("itsneo1990@gmail.com"))
+			Expect(GetAccountEmail(token)).To(Equal("itsneo1990@gmail.com"))
 		})
 	})
 
@@ -54,12 +54,12 @@ var _ = Describe("Token", func() {
 	Context("test get user email", func() {
 		It("should success", func() {
 			token, _ := Create("itsneo1990@gmail.com")
-			email, err := GetUserEmail(token)
+			email, err := GetAccountEmail(token)
 			Expect(email).To(Equal("itsneo1990@gmail.com"))
 			Expect(err).To(BeNil())
 		})
 		It("should get failed", func() {
-			_, err := GetUserEmail("fake")
+			_, err := GetAccountEmail("fake")
 			Expect(err).ToNot(BeNil())
 		})
 	})

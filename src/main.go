@@ -3,7 +3,10 @@ package main
 import (
 	"gin_project_starter/src/controllers"
 	"gin_project_starter/src/services"
+	"gin_project_starter/src/utils"
 	"os"
+
+	"github.com/gin-gonic/gin/binding"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-contrib/pprof"
@@ -16,9 +19,10 @@ import (
 func main() {
 	settingLogger()
 	settingViper()
+	binding.Validator = new(utils.ValidatorV9)
 
 	engine := gin.New()
-	engine.Use(gin.ErrorLogger())
+	engine.Use(gin.Logger())
 	engine.Use(gin.Recovery())
 
 	// initialize pprof tools
@@ -40,8 +44,8 @@ func main() {
 
 func settingViper() {
 	// load configs
-	viper.AddConfigPath("./configs")
-	viper.SetConfigFile("configs/server.toml")
+	viper.SetConfigName("application")
+	viper.AddConfigPath("configs/")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		log.Panic().Str("err", err.Error()).Msg("Fatal error config file")

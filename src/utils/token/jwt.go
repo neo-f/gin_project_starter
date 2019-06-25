@@ -56,7 +56,7 @@ func Verify(t string) bool {
 	return true
 }
 
-func GetUserEmail(t string) (string, error) {
+func GetAccountEmail(t string) (string, error) {
 	claim, err := parse(t)
 	if err != nil {
 		return "", err

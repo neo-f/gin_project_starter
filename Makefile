@@ -1,14 +1,17 @@
 GO=GO111MODULE=on go
-GO_OFF=GO111MODULE=off go
 GOLINT=golangci-lint
 
 .PHONY: all
-all: lint test bins
+all: lint test build
 
 
-.PHONY: bins
-bins:
+.PHONY: build
+build:
 	$(GO) build -o ./bin/gin_project_starter ./src
+
+.PHONY: run
+run:
+	$(GO) run ./src
 
 .PHONY: lint
 lint:
@@ -18,4 +21,4 @@ lint:
 
 .PHONY: test
 test:
-	$(GO) test -cover -race -v ./...
+	$(GO) test -coverprofile cover.out -race -v ./...

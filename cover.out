@@ -11,6 +11,6 @@ gin_project_starter/src/utils/token/jwt.go:44.16,46.3 1 4
 gin_project_starter/src/utils/token/jwt.go:52.28,53.36 1 4
 gin_project_starter/src/utils/token/jwt.go:56.2,56.13 1 3
 gin_project_starter/src/utils/token/jwt.go:53.36,55.3 1 1
-gin_project_starter/src/utils/token/jwt.go:59.45,61.16 2 3
+gin_project_starter/src/utils/token/jwt.go:59.48,61.16 2 3
 gin_project_starter/src/utils/token/jwt.go:64.2,64.25 1 2
 gin_project_starter/src/utils/token/jwt.go:61.16,63.3 1 1

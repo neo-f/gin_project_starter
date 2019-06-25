@@ -2,7 +2,7 @@ package account
 
 import "time"
 
-type User struct {
+type Account struct {
 	ID          int64     `json:"id"`
 	Username    string    `json:"username"`
 	Password    string    `json:"password"`

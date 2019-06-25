@@ -1,9 +1,10 @@
 package account
 
 type Service interface {
-	UserRetrieve(id int64) (User, error)
-	UserList(limit, offset int) ([]User, int, error)
-	UserUpdate(obj *User, columns ...string) error
-	UserDelete(id int64) error
-	UserLogin(email, password string) (user User, t string, err error)
+	Retrieve(id int64) (Account, error)
+	List(limit, offset int) ([]Account, int, error)
+	Create(username, password, email string) (Account, error)
+	Update(obj *Account, columns ...string) error
+	Delete(id int64) error
+	Login(email, password string) (user Account, t string, err error)
 }

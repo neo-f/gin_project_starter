@@ -36,15 +36,3 @@ linters-settings:
 linters:
   enable-all: true
   disable:
-    - maligned
-    - prealloc
-    - gochecknoglobals
-
-run:
-  skip-dirs:
-    - pkg/golinters/goanalysis/(checker|passes)
-
-# golangci.com configuration
-# https://github.com/golangci/golangci/wiki/Configuration
-service:
-  golangci-lint-version: 1.17.x # use the fixed version to not introduce new linters unexpectedly
