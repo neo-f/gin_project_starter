@@ -1,24 +1,24 @@
-GO=GO111MODULE=on go
-GOLINT=golangci-lint
-
 .PHONY: all
 all: lint test build
 
-
 .PHONY: build
 build:
-	$(GO) build -o ./bin/gin_project_starter ./src
-
-.PHONY: run
-run:
-	$(GO) run ./src
+	go build -o ./bin/gin_project_starter ./src
 
 .PHONY: lint
 lint:
-	$(GOLINT) run --fix --skip-dirs vendor
-	$(GO) vet ./...
-	$(GO) fmt ./...
+	golangci-lint run -v --fix --skip-dirs vendor
+
+.PHONY: run
+run:
+	go run ./src
 
 .PHONY: test
 test:
-	$(GO) test -coverprofile=coverage.txt -race -v ./...
+	go test -coverprofile=coverage.txt -race -v ./...
+
+.PHONY: setup
+setup:
+	curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(GOPATH)/bin
+	golangci-lint --version
+	go mod download
