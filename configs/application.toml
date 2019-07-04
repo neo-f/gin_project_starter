@@ -6,6 +6,7 @@ port = "5000"
 secret = "CHANGE ME!!!"
 expire_time = '3m'
 
-[storage.postgres]
-    [storage.postgres.default]
-    url = "postgres://root:root@localhost:5432/gin_project_starter"
+[storage]
+[[storage.databases]]
+name = "auth"
+dsn = "postgres://postgres:itsneo1990@localhost:5432/auth?sslmode=disable"

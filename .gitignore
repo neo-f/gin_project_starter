@@ -17,7 +17,7 @@ gin_project_starter
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
-cover.out
+coverage.txt
 
 # IntelliJ
 out/
