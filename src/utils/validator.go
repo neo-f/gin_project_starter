@@ -4,10 +4,7 @@ import (
 	"reflect"
 	"sync"
 
-	zhongwen "github.com/go-playground/locales/zh"
-	ut "github.com/go-playground/universal-translator"
 	"gopkg.in/go-playground/validator.v9"
-	zh_trans "gopkg.in/go-playground/validator.v9/translations/zh"
 )
 
 type ValidatorV9 struct {
@@ -33,12 +30,6 @@ func (v *ValidatorV9) Engine() interface{} {
 func (v *ValidatorV9) lazyinit() {
 	v.once.Do(func() {
 		v.validate = validator.New()
-		v.validate.SetTagName("validate")
-		// add any custom validations etc. here
-		zh := zhongwen.New()
-		uni := ut.New(zh, zh)
-		trans, _ := uni.GetTranslator("zh")
-		_ = zh_trans.RegisterDefaultTranslations(v.validate, trans)
 	})
 }
 

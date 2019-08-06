@@ -66,7 +66,7 @@ func (s *Storage) lazyInit() {
 		}
 		for _, db := range dbs {
 			if err := s.register(db); err != nil {
-				log.Fatal().Err(err).Str("name", db.Name).Msg("database register failed")
+				log.Fatal().Err(err).Str("name", db.Name).Msg("database registration failed")
 			}
 		}
 	})

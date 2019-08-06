@@ -30,6 +30,8 @@ func main() {
 	engine := gin.New()
 	engine.Use(cors.Default())
 	engine.Use(middlewares.Logger)
+	engine.Use(middlewares.Translator())
+	engine.Use(middlewares.ErrorResponder())
 	engine.Use(gin.RecoveryWithWriter(log.Logger))
 
 	controllers.Register(engine)
@@ -47,7 +49,6 @@ func main() {
 }
 
 func settingLogger() {
-	gin.SetMode(gin.ReleaseMode)
 	log.Logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}).With().Stack().Caller().Timestamp().Logger()
 	if gin.Mode() == gin.DebugMode {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
