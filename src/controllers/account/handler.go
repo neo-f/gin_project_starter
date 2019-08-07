@@ -4,8 +4,6 @@ import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/services/account"
 	"gin_project_starter/src/utils"
-	"net/http"
-
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +22,7 @@ func (r Account) Delete(ctx *gin.Context) {
 	if err := r.service.Delete(acc.ID); err != nil {
 		_ = ctx.AbortWithError(400, err)
 	}
-	ctx.JSON(http.StatusNoContent, nil)
+	ctx.JSON(204, nil)
 }
 
 func (r Account) Update(ctx *gin.Context) {
@@ -52,11 +50,11 @@ func (r Account) Update(ctx *gin.Context) {
 		_ = ctx.AbortWithError(400, err)
 		return
 	}
-	ctx.JSON(http.StatusOK, acc)
+	ctx.JSON(200, acc)
 }
 
 func (r Account) Retrieve(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, ctx.MustGet("account"))
+	ctx.JSON(200, ctx.MustGet("account"))
 }
 
 func (r Account) Login(ctx *gin.Context) {
@@ -115,12 +113,12 @@ func (r Account) DetailContext(ctx *gin.Context) {
 		ID int64 `uri:"id" validate:"required"`
 	}
 	if err := ctx.ShouldBindUri(&req); err != nil {
-		_ = ctx.AbortWithError(http.StatusBadRequest, err)
+		_ = ctx.AbortWithError(400, err)
 		return
 	}
 	acc, err := r.service.Retrieve(req.ID)
 	if err != nil {
-		_ = ctx.AbortWithError(http.StatusNotFound, err)
+		_ = ctx.AbortWithError(404, err)
 		return
 	}
 	ctx.Set("account", acc)

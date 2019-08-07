@@ -9,15 +9,17 @@ import (
 
 // register Handlers
 func Register(engine *gin.Engine) {
-	accountG := engine.Group("account")
-	accountR := account.Router(services.NewAccountService())
-	accountG.GET("/", accountR.List)
-	accountG.POST("/", accountR.Create)
-	accountG.POST("/login", accountR.Login)
+	accountRouter := account.Router(services.NewAccountService())
 	{
-		accountGDetail := accountG.Group(":id", accountR.DetailContext)
-		accountGDetail.GET("/", accountR.Retrieve)
-		accountGDetail.PUT("/", accountR.Update)
-		accountGDetail.DELETE("/", accountR.Delete)
+		accountG := engine.Group("account")
+		accountG.GET("/", accountRouter.List)
+		accountG.POST("/", accountRouter.Create)
+		accountG.POST("/login", accountRouter.Login)
+		{
+			accountGDetail := accountG.Group("/:id", accountRouter.DetailContext)
+			accountGDetail.GET("/", accountRouter.Retrieve)
+			accountGDetail.PUT("/", accountRouter.Update)
+			accountGDetail.DELETE("/", accountRouter.Delete)
+		}
 	}
 }
