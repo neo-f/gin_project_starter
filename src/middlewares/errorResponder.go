@@ -15,6 +15,7 @@ func ErrorResponder() gin.HandlerFunc {
 		if len(ctx.Errors) == 0 {
 			return
 		}
+		code := ctx.Writer.Status()
 		for idx, err := range ctx.Errors {
 			switch errs := err.Err.(type) {
 			case validator.ValidationErrors:
@@ -29,9 +30,9 @@ func ErrorResponder() gin.HandlerFunc {
 						Meta: nil,
 					}
 				}
-				ctx.JSON(400, ctx.Errors.JSON())
+				ctx.JSON(code, ctx.Errors.JSON())
 			default:
-				ctx.JSON(400, ctx.Errors.JSON())
+				ctx.JSON(code, ctx.Errors.JSON())
 			}
 		}
 	}
