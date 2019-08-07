@@ -15,7 +15,7 @@ func Translator() gin.HandlerFunc {
 	universalTranslators := ut.New(en_US.New(), zh_Hans.New(), en_US.New())
 	return func(ctx *gin.Context) {
 		v := binding.Validator.Engine().(*validator.Validate)
-		locale := ctx.DefaultQuery("locale", "en")
+		locale := ctx.DefaultQuery("locale", "en_US")
 		trans, _ := universalTranslators.GetTranslator(locale)
 		switch locale {
 		case "zh_Hans":
