@@ -41,7 +41,6 @@ func Logger(c *gin.Context) {
 		Int("code", code).
 		Str("client_ip", c.ClientIP()).
 		Str("method", c.Request.Method).
-		Fields(c.Keys).
 		Str("latency", time.Since(start).String()).
 		Str("path", path.String())
 	if len(c.Errors) != 0 {
