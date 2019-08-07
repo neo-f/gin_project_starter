@@ -4,6 +4,7 @@ import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/services/account"
 	"gin_project_starter/src/utils"
+
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gin-gonic/gin"
