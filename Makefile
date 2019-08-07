@@ -21,4 +21,3 @@ test:
 setup:
 	curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(GOPATH)/bin
 	golangci-lint --version
-	go mod download
