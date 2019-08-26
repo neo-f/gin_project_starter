@@ -8,7 +8,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.4.0
-	github.com/go-pg/pg v8.0.5+incompatible
+	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/locales v0.12.1
 	github.com/go-playground/universal-translator v0.16.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
