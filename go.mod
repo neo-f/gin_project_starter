@@ -10,7 +10,7 @@ require (
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/locales v0.13.0
-	github.com/go-playground/universal-translator v0.16.0
+	github.com/go-playground/universal-translator v0.17.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/onsi/ginkgo v1.10.2
