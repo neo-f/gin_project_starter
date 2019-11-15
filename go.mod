@@ -14,7 +14,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/onsi/ginkgo v1.10.2
-	github.com/onsi/gomega v1.7.0
+	github.com/onsi/gomega v1.7.1
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.16.0
 	github.com/spf13/viper v1.5.0
