@@ -13,7 +13,7 @@ require (
 	github.com/go-playground/universal-translator v0.16.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/leodido/go-urn v1.1.0 // indirect
-	github.com/onsi/ginkgo v1.10.2
+	github.com/onsi/ginkgo v1.10.3
 	github.com/onsi/gomega v1.7.1
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.16.0
