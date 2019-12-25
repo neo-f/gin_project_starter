@@ -53,7 +53,7 @@ func (s *Storage) Get(name string) *pg.DB {
 	defer s.mutex.RUnlock()
 	db, ok := s.databases[name]
 	if !ok {
-		log.Error().Str("name", name).Msg("database have not registered")
+		log.Error().Str("name", name).Msg("database has not registered")
 	}
 	return db
 }

@@ -1,0 +1,12 @@
+[server]
+addr = "0.0.0.0:5000"
+debug = true
+
+[jwt]
+secret = "CHANGE ME!!!"
+expire_time = '3m'
+
+[storage]
+[[storage.databases]]
+name = "auth"
+dsn = "postgres://postgres:itsneo1990@localhost:5432/radio?sslmode=disable"
