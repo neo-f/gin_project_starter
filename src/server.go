@@ -63,7 +63,6 @@ func NewAPI() *http.Server {
 	engine := gin.New()
 	engine.Use(cors.Default())
 	engine.Use(middlewares.Logger)
-	engine.Use(middlewares.Translator())
 	engine.Use(middlewares.ErrorResponder())
 	engine.Use(gin.RecoveryWithWriter(log.Logger))
 	controllers.Register(engine)
