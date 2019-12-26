@@ -2,9 +2,10 @@ package storages
 
 import (
 	"context"
-	"github.com/spf13/viper"
 	"sync"
 	"time"
+
+	"github.com/spf13/viper"
 
 	"github.com/go-pg/pg/v9"
 	"github.com/rs/zerolog/log"

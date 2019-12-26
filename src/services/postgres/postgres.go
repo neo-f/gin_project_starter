@@ -4,9 +4,10 @@ import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/storages"
 	"gin_project_starter/src/utils/token"
+	"time"
+
 	"github.com/go-pg/pg/v9/orm"
 	"github.com/rs/zerolog/log"
-	"time"
 
 	"github.com/go-pg/pg/v9"
 	"github.com/pkg/errors"

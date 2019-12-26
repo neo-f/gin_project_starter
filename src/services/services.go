@@ -1,17 +1,26 @@
 package services
 
 import (
+	"context"
 	"time"
+
+	"github.com/go-pg/pg/v9"
 )
 
 type Account struct {
-	ID          int64     `json:"id" pg:",pk"`
-	Username    string    `json:"username" pg:",unique"`
-	Password    string    `json:"-"`
-	Email       string    `json:"email" pg:",unique"`
-	CreatedAt   time.Time `json:"-" pg:"default:now()"`
-	UpdatedAt   time.Time `json:"-"`
-	LastLoginAt time.Time `json:"last_login_at"`
+	ID       int64  `json:"id" pg:",pk"`
+	Username string `json:"username" pg:",unique"`
+	Password string `json:"-"`
+	Email    string `json:"email" pg:",unique"`
+
+	CreatedAt   pg.NullTime `json:"-" pg:"default:now()"`
+	UpdatedAt   pg.NullTime `json:"-"`
+	LastLoginAt pg.NullTime `json:"last_login_at"`
+}
+
+func (a *Account) BeforeUpdate(ctx context.Context) (context.Context, error) {
+	a.UpdatedAt = pg.NullTime{Time: time.Now()}
+	return ctx, nil
 }
 
 type AccountService interface {
