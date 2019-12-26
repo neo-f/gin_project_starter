@@ -3,6 +3,7 @@ package account
 import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/utils"
+	"github.com/go-pg/pg"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -11,14 +12,18 @@ import (
 
 type Account struct {
 	service services.AccountService
+	key     string
 }
 
 func Router(service services.AccountService) *Account {
-	return &Account{service: service}
+	return &Account{
+		service: service,
+		key:     "account",
+	}
 }
 
 func (r Account) Delete(ctx *gin.Context) {
-	acc := ctx.MustGet("postgres").(services.Account)
+	acc := ctx.MustGet(r.key).(services.Account)
 	if err := r.service.Delete(acc.ID); err != nil {
 		_ = ctx.AbortWithError(400, err)
 	}
@@ -34,7 +39,7 @@ func (r Account) Update(ctx *gin.Context) {
 		_ = ctx.AbortWithError(400, err)
 		return
 	}
-	acc := ctx.MustGet("user").(services.Account)
+	acc := ctx.MustGet(r.key).(services.Account)
 	fields := make([]string, 0)
 	if req.Email != nil {
 		acc.Email = *req.Email
@@ -54,7 +59,7 @@ func (r Account) Update(ctx *gin.Context) {
 }
 
 func (r Account) Retrieve(ctx *gin.Context) {
-	ctx.JSON(200, ctx.MustGet("postgres"))
+	ctx.JSON(200, ctx.MustGet(r.key))
 }
 
 func (r Account) Login(ctx *gin.Context) {
@@ -118,9 +123,13 @@ func (r Account) DetailContext(ctx *gin.Context) {
 	}
 	acc, err := r.service.Retrieve(req.ID)
 	if err != nil {
-		_ = ctx.AbortWithError(404, err)
+		if err == pg.ErrNoRows {
+			ctx.AbortWithStatus(404)
+			return
+		}
+		_ = ctx.AbortWithError(400, err)
 		return
 	}
-	ctx.Set("postgres", acc)
+	ctx.Set(r.key, acc)
 	ctx.Next()
 }

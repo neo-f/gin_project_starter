@@ -4,11 +4,11 @@ import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/storages"
 	"gin_project_starter/src/utils/token"
-	"github.com/go-pg/pg/orm"
+	"github.com/go-pg/pg/v9/orm"
 	"github.com/rs/zerolog/log"
 	"time"
 
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v9"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -58,12 +58,12 @@ func (u *AccountService) Update(obj *services.Account, columns ...string) error 
 }
 
 func (u *AccountService) Delete(id int64) error {
-	_, err := u.Conn.Model(services.Account{ID: id}).WherePK().Delete()
+	_, err := u.Conn.Model(&services.Account{ID: id}).WherePK().Delete()
 	return err
 }
 
 func (u *AccountService) Retrieve(id int64) (obj services.Account, err error) {
-	err = u.Conn.Model(&u).Where("id = ?", id).Select()
+	err = u.Conn.Model(&obj).Where("id = ?", id).Select()
 	return
 }
 

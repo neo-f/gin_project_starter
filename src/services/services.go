@@ -5,12 +5,12 @@ import (
 )
 
 type Account struct {
-	ID          int64     `json:"id"`
-	Username    string    `json:"username"`
+	ID          int64     `json:"id" pg:",pk"`
+	Username    string    `json:"username" pg:",unique"`
 	Password    string    `json:"-"`
-	Email       string    `json:"email"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	Email       string    `json:"email" pg:",unique"`
+	CreatedAt   time.Time `json:"-" pg:"default:now()"`
+	UpdatedAt   time.Time `json:"-"`
 	LastLoginAt time.Time `json:"last_login_at"`
 }
 

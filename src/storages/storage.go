@@ -1,11 +1,12 @@
 package storages
 
 import (
+	"context"
 	"github.com/spf13/viper"
 	"sync"
 	"time"
 
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v9"
 	"github.com/rs/zerolog/log"
 )
 
@@ -89,14 +90,15 @@ func (s *Storage) Close() {
 
 type dbLogger struct{}
 
-func (d dbLogger) BeforeQuery(q *pg.QueryEvent) {
-	q.Data["start"] = time.Now()
+func (d dbLogger) BeforeQuery(ctx context.Context, event *pg.QueryEvent) (context.Context, error) {
+	return ctx, nil
 }
 
-func (d dbLogger) AfterQuery(q *pg.QueryEvent) {
-	latency := time.Since(q.Data["start"].(time.Time)).String()
-	query, _ := q.FormattedQuery()
+func (d dbLogger) AfterQuery(ctx context.Context, event *pg.QueryEvent) error {
+	latency := time.Since(event.StartTime).String()
+	query, _ := event.FormattedQuery()
 	log.Debug().Str("latency", latency).Msg(query)
+	return nil
 }
 
 func init() {

@@ -1,12 +1,10 @@
 package main
 
 import (
-	"gin_project_starter/src/utils"
 	"os"
 	"syscall"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 
@@ -16,8 +14,6 @@ import (
 const configFile = "application.toml"
 
 func main() {
-	binding.Validator = new(utils.ValidatorV10)
-
 	log.Logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}).With().Stack().Caller().Timestamp().Logger()
 	if gin.Mode() == gin.DebugMode {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
