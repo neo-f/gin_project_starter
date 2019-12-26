@@ -1,6 +1,8 @@
-package account
+package postgres
 
 import (
+	"gin_project_starter/src/services"
+	"gin_project_starter/src/storages"
 	"gin_project_starter/src/utils/token"
 	"time"
 
@@ -13,11 +15,16 @@ var (
 	ErrUnMatch = errors.New("email or password is not correct")
 )
 
-type PostgresService struct {
+type AccountService struct {
 	Conn *pg.DB
 }
 
-func (u *PostgresService) Login(email, password string) (obj Account, t string, err error) {
+func NewAccountService() services.AccountService {
+	conn := storages.Get("auth")
+	return &AccountService{Conn: conn}
+}
+
+func (u *AccountService) Login(email, password string) (obj services.Account, t string, err error) {
 	err = u.Conn.Model(&obj).Where("email = ?", email).Select()
 	if err != nil {
 		return
@@ -35,33 +42,33 @@ func (u *PostgresService) Login(email, password string) (obj Account, t string, 
 	return
 }
 
-func (u *PostgresService) Update(obj *Account, columns ...string) error {
+func (u *AccountService) Update(obj *services.Account, columns ...string) error {
 	_, err := u.Conn.Model(obj).Column(columns...).Returning("*").WherePK().Update()
 	return err
 }
 
-func (u *PostgresService) Delete(id int64) error {
-	_, err := u.Conn.Model(Account{ID: id}).WherePK().Delete()
+func (u *AccountService) Delete(id int64) error {
+	_, err := u.Conn.Model(services.Account{ID: id}).WherePK().Delete()
 	return err
 }
 
-func (u *PostgresService) Retrieve(id int64) (obj Account, err error) {
+func (u *AccountService) Retrieve(id int64) (obj services.Account, err error) {
 	err = u.Conn.Model(&u).Where("id = ?", id).Select()
 	return
 }
 
-func (u *PostgresService) List(limit, offset int) (objs []Account, count int, err error) {
-	objs = make([]Account, 0)
+func (u *AccountService) List(limit, offset int) (objs []services.Account, count int, err error) {
+	objs = make([]services.Account, 0)
 	count, err = u.Conn.Model(&objs).Limit(limit).Offset(limit).SelectAndCount()
 	return
 }
 
-func (u *PostgresService) Create(username, password, email string) (obj Account, err error) {
+func (u *AccountService) Create(username, password, email string) (obj services.Account, err error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
 		return obj, err
 	}
-	obj = Account{
+	obj = services.Account{
 		Username: username,
 		Password: string(hash),
 		Email:    email,

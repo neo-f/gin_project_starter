@@ -2,14 +2,14 @@ package controllers
 
 import (
 	"gin_project_starter/src/controllers/account"
-	"gin_project_starter/src/services"
+	"gin_project_starter/src/services/postgres"
 
 	"github.com/gin-gonic/gin"
 )
 
 // register Handlers
 func Register(engine *gin.Engine) {
-	accountRouter := account.Router(services.NewAccountService())
+	accountRouter := account.Router(postgres.NewAccountService())
 	{
 		accountG := engine.Group("account")
 		accountG.GET("/", accountRouter.List)

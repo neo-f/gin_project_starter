@@ -4,6 +4,7 @@ import (
 	"context"
 	"gin_project_starter/src/controllers"
 	"gin_project_starter/src/middlewares"
+	"gin_project_starter/src/storages"
 	"net/http"
 	"os"
 	"os/signal"
@@ -51,6 +52,7 @@ func (s *Server) Shutdown() {
 	if err := s.server.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
 		log.Error().Err(err).Msg("Failed shutdown")
 	}
+	storages.Close()
 }
 
 func (s *Server) Restart() {

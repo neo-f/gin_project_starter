@@ -2,7 +2,6 @@ package account
 
 import (
 	"gin_project_starter/src/services"
-	"gin_project_starter/src/services/account"
 	"gin_project_starter/src/utils"
 
 	"golang.org/x/crypto/bcrypt"
@@ -19,7 +18,7 @@ func Router(service services.AccountService) *Account {
 }
 
 func (r Account) Delete(ctx *gin.Context) {
-	acc := ctx.MustGet("account").(account.Account)
+	acc := ctx.MustGet("postgres").(services.Account)
 	if err := r.service.Delete(acc.ID); err != nil {
 		_ = ctx.AbortWithError(400, err)
 	}
@@ -35,7 +34,7 @@ func (r Account) Update(ctx *gin.Context) {
 		_ = ctx.AbortWithError(400, err)
 		return
 	}
-	acc := ctx.MustGet("user").(account.Account)
+	acc := ctx.MustGet("user").(services.Account)
 	fields := make([]string, 0)
 	if req.Email != nil {
 		acc.Email = *req.Email
@@ -55,7 +54,7 @@ func (r Account) Update(ctx *gin.Context) {
 }
 
 func (r Account) Retrieve(ctx *gin.Context) {
-	ctx.JSON(200, ctx.MustGet("account"))
+	ctx.JSON(200, ctx.MustGet("postgres"))
 }
 
 func (r Account) Login(ctx *gin.Context) {
@@ -73,8 +72,8 @@ func (r Account) Login(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(200, gin.H{
-		"account": acc,
-		"token":   token,
+		"postgres": acc,
+		"token":    token,
 	})
 }
 
@@ -122,6 +121,6 @@ func (r Account) DetailContext(ctx *gin.Context) {
 		_ = ctx.AbortWithError(404, err)
 		return
 	}
-	ctx.Set("account", acc)
+	ctx.Set("postgres", acc)
 	ctx.Next()
 }

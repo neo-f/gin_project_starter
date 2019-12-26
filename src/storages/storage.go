@@ -10,6 +10,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var defaultStorage *Storage
+
 type databaseConfig struct {
 	Name string
 	Dsn  string
@@ -47,6 +49,9 @@ func (s *Storage) register(conf databaseConfig) error {
 	return nil
 }
 
+func Get(name string) *pg.DB {
+	return defaultStorage.Get(name)
+}
 func (s *Storage) Get(name string) *pg.DB {
 	s.lazyInit()
 	s.mutex.RLock()
@@ -72,6 +77,9 @@ func (s *Storage) lazyInit() {
 	})
 }
 
+func Close() {
+	defaultStorage.Close()
+}
 func (s *Storage) Close() {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -91,4 +99,8 @@ func (d dbLogger) AfterQuery(q *pg.QueryEvent) {
 	latency := time.Since(q.Data["start"].(time.Time)).String()
 	query, _ := q.FormattedQuery()
 	log.Debug().Str("latency", latency).Msg(query)
+}
+
+func init() {
+	defaultStorage = NewStorage()
 }

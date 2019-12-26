@@ -1,20 +1,24 @@
 package services
 
 import (
-	"gin_project_starter/src/services/account"
-	"gin_project_starter/src/storages"
+	"time"
 )
 
-type AccountService interface {
-	Retrieve(id int64) (account.Account, error)
-	List(limit, offset int) ([]account.Account, int, error)
-	Create(username, password, email string) (account.Account, error)
-	Update(obj *account.Account, columns ...string) error
-	Delete(id int64) error
-	Login(email, password string) (user account.Account, t string, err error)
+type Account struct {
+	ID          int64     `json:"id"`
+	Username    string    `json:"username"`
+	Password    string    `json:"password"`
+	Email       string    `json:"email"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	LastLoginAt time.Time `json:"last_login_at"`
 }
 
-func NewAccountService() AccountService {
-	conn := storages.NewStorage().Get("auth")
-	return &account.PostgresService{Conn: conn}
+type AccountService interface {
+	Retrieve(id int64) (Account, error)
+	List(limit, offset int) ([]Account, int, error)
+	Create(username, password, email string) (Account, error)
+	Update(obj *Account, columns ...string) error
+	Delete(id int64) error
+	Login(email, password string) (user Account, t string, err error)
 }
