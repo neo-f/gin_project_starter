@@ -6,20 +6,33 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fsnotify/fsnotify v1.4.7
-	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-pg/pg v8.0.6+incompatible
-	github.com/go-playground/locales v0.13.0
-	github.com/go-playground/universal-translator v0.17.0
+	github.com/go-playground/universal-translator v0.17.0 // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20191106031601-ce3c9ade29de // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/leodido/go-urn v1.1.0 // indirect
-	github.com/onsi/ginkgo v1.10.3
+	github.com/json-iterator/go v1.1.9 // indirect
+	github.com/leodido/go-urn v1.2.0 // indirect
+	github.com/mattn/go-isatty v0.0.11 // indirect
+	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
+	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/pkg/errors v0.8.1
-	github.com/rs/zerolog v1.16.0
-	github.com/spf13/viper v1.5.0
-	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
+	github.com/rs/zerolog v1.17.2
+	github.com/smartystreets/assertions v1.0.1 // indirect
+	github.com/spf13/afero v1.2.2 // indirect
+	github.com/spf13/cast v1.3.1 // indirect
+	github.com/spf13/jwalterweatherman v1.1.0 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/viper v1.6.1
+	golang.org/x/crypto v0.0.0-20191219195013-becbf705a915
+	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
+	golang.org/x/sys v0.0.0-20191224085550-c709ea063b76 // indirect
+	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
+	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
+	gopkg.in/ini.v1 v1.51.1 // indirect
+	gopkg.in/yaml.v2 v2.2.7 // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
