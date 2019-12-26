@@ -3,8 +3,7 @@ package account
 import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/utils"
-
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v9"
 
 	"golang.org/x/crypto/bcrypt"
 

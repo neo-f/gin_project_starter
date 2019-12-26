@@ -8,7 +8,6 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.5.0
-	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-pg/pg/v9 v9.1.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20191106031601-ce3c9ade29de // indirect
