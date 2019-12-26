@@ -4,6 +4,8 @@ import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/storages"
 	"gin_project_starter/src/utils/token"
+	"github.com/go-pg/pg/orm"
+	"github.com/rs/zerolog/log"
 	"time"
 
 	"github.com/go-pg/pg"
@@ -21,6 +23,14 @@ type AccountService struct {
 
 func NewAccountService() services.AccountService {
 	conn := storages.Get("auth")
+	err := conn.CreateTable(new(services.Account), &orm.CreateTableOptions{
+		Temp:          false,
+		IfNotExists:   true,
+		FKConstraints: true,
+	})
+	if err != nil {
+		log.Fatal().Err(err).Msg("create table failed")
+	}
 	return &AccountService{Conn: conn}
 }
 
