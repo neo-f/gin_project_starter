@@ -1,18 +1,17 @@
 package utils
 
 import (
+	"github.com/go-playground/validator/v10"
 	"reflect"
 	"sync"
-
-	"gopkg.in/go-playground/validator.v9"
 )
 
-type ValidatorV9 struct {
+type ValidatorV10 struct {
 	once     sync.Once
 	validate *validator.Validate
 }
 
-func (v *ValidatorV9) ValidateStruct(obj interface{}) error {
+func (v *ValidatorV10) ValidateStruct(obj interface{}) error {
 	if kindOfData(obj) == reflect.Struct {
 		v.lazyinit()
 		if err := v.validate.Struct(obj); err != nil {
@@ -22,12 +21,12 @@ func (v *ValidatorV9) ValidateStruct(obj interface{}) error {
 	return nil
 }
 
-func (v *ValidatorV9) Engine() interface{} {
+func (v *ValidatorV10) Engine() interface{} {
 	v.lazyinit()
 	return v.validate
 }
 
-func (v *ValidatorV9) lazyinit() {
+func (v *ValidatorV10) lazyinit() {
 	v.once.Do(func() {
 		v.validate = validator.New()
 	})

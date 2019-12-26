@@ -16,7 +16,7 @@ import (
 const configFile = "application.toml"
 
 func main() {
-	binding.Validator = new(utils.ValidatorV9)
+	binding.Validator = new(utils.ValidatorV10)
 
 	log.Logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}).With().Stack().Caller().Timestamp().Logger()
 	if gin.Mode() == gin.DebugMode {

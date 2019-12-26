@@ -1,10 +1,9 @@
 package storages
 
 import (
+	"github.com/spf13/viper"
 	"sync"
 	"time"
-
-	"github.com/spf13/viper"
 
 	"github.com/go-pg/pg"
 	"github.com/rs/zerolog/log"
@@ -18,16 +17,16 @@ type databaseConfig struct {
 }
 
 type Storage struct {
-	databases   map[string]*pg.DB
-	mutex       sync.RWMutex
-	connectOnce sync.Once
+	databases map[string]*pg.DB
+	mutex     sync.RWMutex
+	connected bool
 }
 
 func NewStorage() *Storage {
 	s := &Storage{
-		databases:   map[string]*pg.DB{},
-		mutex:       sync.RWMutex{},
-		connectOnce: sync.Once{},
+		databases: map[string]*pg.DB{},
+		mutex:     sync.RWMutex{},
+		connected: false,
 	}
 	return s
 }
@@ -49,9 +48,23 @@ func (s *Storage) register(conf databaseConfig) error {
 	return nil
 }
 
-func Get(name string) *pg.DB {
-	return defaultStorage.Get(name)
+func (s *Storage) lazyInit() {
+	if s.connected {
+		return
+	}
+	var dbs []databaseConfig
+	if err := viper.UnmarshalKey("storage.databases", &dbs); err != nil {
+		log.Fatal().Err(err).Msg("database config parse failed")
+	}
+	for _, db := range dbs {
+		if err := s.register(db); err != nil {
+			log.Fatal().Err(err).Str("name", db.Name).Msg("database registration failed")
+		}
+	}
+	s.connected = true
 }
+
+func Get(name string) *pg.DB { return defaultStorage.Get(name) }
 func (s *Storage) Get(name string) *pg.DB {
 	s.lazyInit()
 	s.mutex.RLock()
@@ -63,23 +76,7 @@ func (s *Storage) Get(name string) *pg.DB {
 	return db
 }
 
-func (s *Storage) lazyInit() {
-	s.connectOnce.Do(func() {
-		var dbs []databaseConfig
-		if err := viper.UnmarshalKey("storage.databases", &dbs); err != nil {
-			log.Fatal().Err(err).Msg("database config parse failed")
-		}
-		for _, db := range dbs {
-			if err := s.register(db); err != nil {
-				log.Fatal().Err(err).Str("name", db.Name).Msg("database registration failed")
-			}
-		}
-	})
-}
-
-func Close() {
-	defaultStorage.Close()
-}
+func Close() { defaultStorage.Close() }
 func (s *Storage) Close() {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -87,6 +84,7 @@ func (s *Storage) Close() {
 		_ = conn.Close()
 		log.Info().Str("name", name).Msg("database closed")
 	}
+	s.connected = false
 }
 
 type dbLogger struct{}
