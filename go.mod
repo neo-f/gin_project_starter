@@ -18,7 +18,7 @@ require (
 	github.com/onsi/gomega v1.8.1
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.16.0
-	github.com/spf13/viper v1.5.0
+	github.com/spf13/viper v1.6.1
 	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	mellium.im/sasl v0.2.1 // indirect
