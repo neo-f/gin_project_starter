@@ -8,5 +8,5 @@ expire_time = '3m'
 
 [storage]
 [[storage.databases]]
-name = "auth"
+name = "radio"
 dsn = "postgres://postgres:itsneo1990@localhost:5432/radio?sslmode=disable"

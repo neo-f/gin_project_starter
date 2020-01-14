@@ -37,7 +37,7 @@ var _ = Describe("Token", func() {
 			}
 			claims.ExpiresAt = time.Now().Add(-time.Second).Unix()
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-			t, _ := token.SignedString([]byte(viper.GetString("JWT.SECRET")))
+			t, _ := token.SignedString([]byte(viper.GetString("jwt.secret")))
 			_, err := Refresh(t)
 			Expect(err).ToNot(BeNil())
 		})

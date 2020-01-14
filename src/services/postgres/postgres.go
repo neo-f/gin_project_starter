@@ -23,7 +23,7 @@ type AccountService struct {
 }
 
 func NewAccountService() services.AccountService {
-	conn := storages.Get("auth")
+	conn := storages.Get()
 	err := conn.CreateTable(new(services.Account), &orm.CreateTableOptions{
 		Temp:          false,
 		IfNotExists:   true,

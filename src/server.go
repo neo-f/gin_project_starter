@@ -26,6 +26,7 @@ type Server struct {
 }
 
 func NewServer() *Server {
+	storages.Connect()
 	server := &Server{
 		server:  NewAPI(),
 		Signals: make(chan os.Signal, 1),

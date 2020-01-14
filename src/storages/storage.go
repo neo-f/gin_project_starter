@@ -11,21 +11,24 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var defaultDB string
 var defaultStorage *Storage
 
-type databaseConfig struct {
+type DatabaseConfig struct {
 	Name string
 	Dsn  string
 }
 
 type Storage struct {
+	config    []DatabaseConfig
 	databases map[string]*pg.DB
 	mutex     sync.RWMutex
 	connected bool
 }
 
-func NewStorage() *Storage {
+func NewStorage(config []DatabaseConfig) *Storage {
 	s := &Storage{
+		config:    config,
 		databases: map[string]*pg.DB{},
 		mutex:     sync.RWMutex{},
 		connected: false,
@@ -33,7 +36,7 @@ func NewStorage() *Storage {
 	return s
 }
 
-func (s *Storage) register(conf databaseConfig) error {
+func (s *Storage) register(conf DatabaseConfig) error {
 	opt, err := pg.ParseURL(conf.Dsn)
 	if err != nil {
 		return err
@@ -42,7 +45,7 @@ func (s *Storage) register(conf databaseConfig) error {
 	if _, err = conn.Exec("SELECT 1;"); err != nil {
 		return err
 	}
-	log.Info().Str("name", conf.Name).Msg("database connected")
+	log.Info().Str("name", conf.Name).Msg("Database connected")
 	conn.AddQueryHook(dbLogger{})
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -54,27 +57,31 @@ func (s *Storage) lazyInit() {
 	if s.connected {
 		return
 	}
-	var dbs []databaseConfig
-	if err := viper.UnmarshalKey("storage.databases", &dbs); err != nil {
-		log.Fatal().Err(err).Msg("database config parse failed")
-	}
-	for _, db := range dbs {
+	for _, db := range s.config {
 		if err := s.register(db); err != nil {
-			log.Fatal().Err(err).Str("name", db.Name).Msg("database registration failed")
+			log.Fatal().Err(err).Str("name", db.Name).Msg("Database registration failed")
 		}
 	}
 	s.connected = true
 }
 
-func Get(name string) *pg.DB { return defaultStorage.Get(name) }
-func (s *Storage) Get(name string) *pg.DB {
+func Get(name ...string) *pg.DB {
+	return defaultStorage.Get(name...)
+}
+func (s *Storage) Get(dbName ...string) *pg.DB {
+	var name string
+	if len(dbName) == 0 {
+		name = defaultDB
+	} else {
+		name = dbName[0]
+	}
 	s.lazyInit()
 	s.mutex.RLock()
-	defer s.mutex.RUnlock()
 	db, ok := s.databases[name]
 	if !ok {
-		log.Error().Str("name", name).Msg("database has not registered")
+		log.Fatal().Str("name", name).Msg("The database is not registered")
 	}
+	defer s.mutex.RUnlock()
 	return db
 }
 
@@ -84,7 +91,7 @@ func (s *Storage) Close() {
 	defer s.mutex.Unlock()
 	for name, conn := range s.databases {
 		_ = conn.Close()
-		log.Info().Str("name", name).Msg("database closed")
+		log.Info().Str("name", name).Msg("Database closed")
 	}
 	s.connected = false
 }
@@ -102,6 +109,13 @@ func (d dbLogger) AfterQuery(ctx context.Context, event *pg.QueryEvent) error {
 	return nil
 }
 
-func init() {
-	defaultStorage = NewStorage()
+func Connect() {
+	var dbs []DatabaseConfig
+	if err := viper.UnmarshalKey("storage.databases", &dbs); err != nil {
+		log.Fatal().Err(err).Msg("Invalid database config")
+	}
+	if len(dbs) > 0 {
+		defaultDB = dbs[0].Name
+	}
+	defaultStorage = NewStorage(dbs)
 }

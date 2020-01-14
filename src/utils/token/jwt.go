@@ -16,12 +16,12 @@ func Create(email string) (string, error) {
 	claims := JWTClaims{
 		Email: email,
 	}
-	expireTime := viper.GetDuration("JWT.EXPIRE_TIME")
+	expireTime := viper.GetDuration("jwt.expire_time")
 	claims.ExpiresAt = time.Now().Add(expireTime).Unix()
 	claims.IssuedAt = time.Now().Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(viper.GetString("JWT.SECRET")))
+	return token.SignedString([]byte(viper.GetString("jwt.secret")))
 }
 
 func Refresh(t string) (string, error) {
@@ -29,17 +29,17 @@ func Refresh(t string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	expireTime := viper.GetDuration("JWT.EXPIRE_TIME")
+	expireTime := viper.GetDuration("jwt.expire_time")
 	claim.ExpiresAt = time.Now().Add(expireTime).Unix()
 
 	newToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
-	signedToken, _ := newToken.SignedString([]byte(viper.GetString("JWT.SECRET")))
+	signedToken, _ := newToken.SignedString([]byte(viper.GetString("jwt.secret")))
 	return signedToken, nil
 }
 
 func parse(t string) (*JWTClaims, error) {
 	token, err := jwt.ParseWithClaims(t, &JWTClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(viper.GetString("JWT.SECRET")), nil
+		return []byte(viper.GetString("jwt.secret")), nil
 	})
 	if err != nil {
 		return &JWTClaims{}, err
