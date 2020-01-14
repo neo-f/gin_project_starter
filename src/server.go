@@ -18,6 +18,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+const defaultShutDownTimeout = 60 * time.Second
+
 type Server struct {
 	server  *http.Server
 	Signals chan os.Signal
@@ -46,7 +48,7 @@ func (s *Server) Run() {
 }
 
 func (s *Server) Shutdown() {
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), defaultShutDownTimeout)
 	defer cancel()
 
 	if err := s.server.Shutdown(ctx); err != nil && err != http.ErrServerClosed {

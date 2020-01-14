@@ -3,6 +3,8 @@ package account
 import (
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/utils"
+	"net/http"
+
 	"github.com/go-pg/pg/v9"
 
 	"golang.org/x/crypto/bcrypt"
@@ -25,9 +27,9 @@ func Router(service services.AccountService) *Account {
 func (r Account) Delete(ctx *gin.Context) {
 	acc := ctx.MustGet(r.key).(services.Account)
 	if err := r.service.Delete(acc.ID); err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 	}
-	ctx.JSON(204, nil)
+	ctx.JSON(http.StatusNoContent, nil)
 }
 
 func (r Account) Update(ctx *gin.Context) {
@@ -36,7 +38,7 @@ func (r Account) Update(ctx *gin.Context) {
 		Password *string `json:"password"`
 	}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 	acc := ctx.MustGet(r.key).(services.Account)
@@ -52,14 +54,14 @@ func (r Account) Update(ctx *gin.Context) {
 	}
 
 	if err := r.service.Update(&acc, fields...); err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-	ctx.JSON(200, acc)
+	ctx.JSON(http.StatusOK, acc)
 }
 
 func (r Account) Retrieve(ctx *gin.Context) {
-	ctx.JSON(200, ctx.MustGet(r.key))
+	ctx.JSON(http.StatusOK, ctx.MustGet(r.key))
 }
 
 func (r Account) Login(ctx *gin.Context) {
@@ -68,15 +70,15 @@ func (r Account) Login(ctx *gin.Context) {
 		Password string `json:"password" validate:"required"`
 	}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 	acc, token, err := r.service.Login(req.Email, req.Password)
 	if err != nil {
-		_ = ctx.AbortWithError(401, err)
+		_ = ctx.AbortWithError(http.StatusUnauthorized, err)
 		return
 	}
-	ctx.JSON(200, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"postgres": acc,
 		"token":    token,
 	})
@@ -89,15 +91,15 @@ func (r Account) Create(ctx *gin.Context) {
 		Email    string `json:"email" validate:"required"`
 	}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 	acc, err := r.service.Create(req.Username, req.Password, req.Email)
 	if err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-	ctx.JSON(201, acc)
+	ctx.JSON(http.StatusCreated, acc)
 }
 
 func (r Account) List(ctx *gin.Context) {
@@ -107,10 +109,10 @@ func (r Account) List(ctx *gin.Context) {
 	}
 	acc, total, err := r.service.List(req.Limit, req.Offset)
 	if err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-	ctx.JSON(200, utils.PaginatedResult(acc, total))
+	ctx.JSON(http.StatusOK, utils.PaginatedResult(acc, total))
 }
 
 func (r Account) DetailContext(ctx *gin.Context) {
@@ -118,16 +120,16 @@ func (r Account) DetailContext(ctx *gin.Context) {
 		ID int64 `uri:"id" validate:"required"`
 	}
 	if err := ctx.ShouldBindUri(&req); err != nil {
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 	acc, err := r.service.Retrieve(req.ID)
 	if err != nil {
 		if err == pg.ErrNoRows {
-			ctx.AbortWithStatus(404)
+			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
-		_ = ctx.AbortWithError(400, err)
+		_ = ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 	ctx.Set(r.key, acc)
