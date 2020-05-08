@@ -7,7 +7,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/cors v1.3.1
-	github.com/gin-gonic/gin v1.6.2
+	github.com/gin-gonic/gin v1.6.3
 	github.com/go-pg/pg/v9 v9.1.6
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20191106031601-ce3c9ade29de // indirect
