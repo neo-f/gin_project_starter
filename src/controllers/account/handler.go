@@ -1,6 +1,7 @@
 package account
 
 import (
+	"errors"
 	"gin_project_starter/src/services"
 	"gin_project_starter/src/utils"
 	"net/http"
@@ -129,7 +130,7 @@ func (r Account) DetailContext(ctx *gin.Context) {
 	}
 	acc, err := r.service.Retrieve(req.ID)
 	if err != nil {
-		if err == pg.ErrNoRows {
+		if errors.Is(err, pg.ErrNoRows) {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}

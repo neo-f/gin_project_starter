@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// register Handlers
+// register Handlers.
 func Register(engine *gin.Engine) {
 	accountRouter := account.Router(postgres.NewAccountService())
 	{

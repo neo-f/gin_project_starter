@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"gin_project_starter/src/controllers"
 	"gin_project_starter/src/middlewares"
 	"gin_project_starter/src/storages"
@@ -52,7 +53,7 @@ func (s *Server) Shutdown() {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultShutDownTimeout)
 	defer cancel()
 
-	if err := s.server.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+	if err := s.server.Shutdown(ctx); err != nil && errors.Is(err, http.ErrServerClosed) {
 		log.Error().Err(err).Msg("Failed shutdown")
 	}
 	storages.Close()
