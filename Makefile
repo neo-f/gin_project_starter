@@ -7,7 +7,7 @@ build:
 
 .PHONY: lint
 lint:
-	golangci-lint run -v --fix --skip-dirs vendor
+	golangci-lint run -v --fix --skip-dirs vendor --timeout=1m
 
 .PHONY: run
 run:
