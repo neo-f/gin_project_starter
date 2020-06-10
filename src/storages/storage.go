@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/go-pg/pg/v9"
+	"github.com/go-pg/pg/v10"
 	"github.com/rs/zerolog/log"
 )
 
@@ -42,7 +42,7 @@ func (s *Storage) register(conf DatabaseConfig) error {
 		return err
 	}
 	conn := pg.Connect(opt)
-	if _, err = conn.Exec("SELECT 1;"); err != nil {
+	if err := conn.Ping(context.Background()); err != nil {
 		return err
 	}
 	log.Info().Str("name", conf.Name).Msg("Database connected")
@@ -105,7 +105,7 @@ func (d dbLogger) BeforeQuery(ctx context.Context, event *pg.QueryEvent) (contex
 func (d dbLogger) AfterQuery(ctx context.Context, event *pg.QueryEvent) error {
 	latency := time.Since(event.StartTime).String()
 	query, _ := event.FormattedQuery()
-	log.Debug().Str("latency", latency).Msg(query)
+	log.Debug().Str("latency", latency).Msg(string(query))
 	return nil
 }
 

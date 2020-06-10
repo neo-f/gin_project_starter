@@ -6,10 +6,10 @@ import (
 	"gin_project_starter/src/utils/token"
 	"time"
 
-	"github.com/go-pg/pg/v9/orm"
+	"github.com/go-pg/pg/v10/orm"
 	"github.com/rs/zerolog/log"
 
-	"github.com/go-pg/pg/v9"
+	"github.com/go-pg/pg/v10"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/go-pg/pg/v9"
+	"github.com/go-pg/pg/v10"
 )
 
 type Account struct {
@@ -13,9 +13,9 @@ type Account struct {
 	Password string `json:"-"`
 	Email    string `json:"email" pg:",unique"`
 
-	CreatedAt   pg.NullTime `json:"-" pg:"default:now()"`
-	UpdatedAt   pg.NullTime `json:"-"`
-	LastLoginAt pg.NullTime `json:"last_login_at"`
+	CreatedAt   time.Time   `json:"-" pg:"default:now(),notnull"`
+	UpdatedAt   pg.NullTime `json:"-" pg:"type:timestamptz"`
+	LastLoginAt pg.NullTime `json:"last_login_at" pg:"type:timestamptz"`
 }
 
 func (a *Account) BeforeUpdate(ctx context.Context) (context.Context, error) {

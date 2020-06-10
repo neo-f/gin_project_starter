@@ -6,7 +6,7 @@ import (
 	"gin_project_starter/src/utils"
 	"net/http"
 
-	"github.com/go-pg/pg/v9"
+	"github.com/go-pg/pg/v10"
 
 	"golang.org/x/crypto/bcrypt"
 
