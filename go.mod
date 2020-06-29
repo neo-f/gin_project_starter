@@ -8,7 +8,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-pg/pg/v10 v10.0.0-beta.2
+	github.com/go-pg/pg/v10 v10.0.0-beta.4
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/google/go-cmp v0.4.1 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
