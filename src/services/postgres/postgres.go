@@ -24,7 +24,7 @@ type AccountService struct {
 
 func NewAccountService() services.AccountService {
 	conn := storages.Get()
-	err := conn.CreateTable(new(services.Account), &orm.CreateTableOptions{
+	err := conn.Model(new(services.Account)).CreateTable(&orm.CreateTableOptions{
 		Temp:          false,
 		IfNotExists:   true,
 		FKConstraints: true,
