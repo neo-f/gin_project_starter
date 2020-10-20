@@ -5,14 +5,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/spf13/viper"
-
 	"github.com/go-pg/pg/v10"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
-var defaultDB string
-var defaultStorage *Storage
+var (
+	defaultDB      string
+	defaultStorage *Storage
+)
 
 type DatabaseConfig struct {
 	Name string
@@ -68,6 +69,7 @@ func (s *Storage) lazyInit() {
 func Get(name ...string) *pg.DB {
 	return defaultStorage.Get(name...)
 }
+
 func (s *Storage) Get(dbName ...string) *pg.DB {
 	var name string
 	if len(dbName) == 0 {

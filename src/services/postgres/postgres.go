@@ -6,17 +6,14 @@ import (
 	"gin_project_starter/src/utils/token"
 	"time"
 
-	"github.com/go-pg/pg/v10/orm"
-	"github.com/rs/zerolog/log"
-
 	"github.com/go-pg/pg/v10"
+	"github.com/go-pg/pg/v10/orm"
 	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var (
-	ErrUnMatch = errors.New("email or password is not correct")
-)
+var ErrUnMatch = errors.New("email or password is not correct")
 
 type AccountService struct {
 	Conn *pg.DB
@@ -70,7 +67,7 @@ func (u *AccountService) Retrieve(id int64) (obj services.Account, err error) {
 
 func (u *AccountService) List(limit, offset int) (objs []services.Account, count int, err error) {
 	objs = make([]services.Account, 0)
-	count, err = u.Conn.Model(&objs).Limit(limit).Offset(limit).SelectAndCount()
+	count, err = u.Conn.Model(&objs).Limit(limit).Offset(offset).SelectAndCount()
 	return
 }
 

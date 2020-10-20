@@ -39,3 +39,4 @@ linters:
     - wsl
     - gochecknoinits
     - gochecknoglobals
+    - nlreturn

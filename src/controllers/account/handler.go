@@ -6,11 +6,9 @@ import (
 	"gin_project_starter/src/utils"
 	"net/http"
 
-	"github.com/go-pg/pg/v10"
-
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/gin-gonic/gin"
+	"github.com/go-pg/pg/v10"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Account struct {
